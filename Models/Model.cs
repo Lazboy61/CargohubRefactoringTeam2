@@ -1,0 +1,213 @@
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+public class Client
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+    public string City { get; set; }
+    public string ZipCode { get; set; }
+    public string Province { get; set; }
+    public string Country { get; set; }
+    public string ContactName { get; set; }
+    public string ContactPhone { get; set; }
+    public string ContactEmail { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class Inventory
+{
+    public int Id { get; set; }
+    public int WarehouseId { get; set; }
+    public string Description { get; set; }
+    public string ItemReference { get; set; }
+    public int LocationId { get; set; }
+    public int TotalOnHand { get; set; }
+    public int TotalExpected { get; set; }
+    public int TotalOrdered { get; set; }
+    public int TotalAllocated { get; set; }
+    public int TotalAvailable { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class ItemGroup
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class ItemLine
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class ItemType
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class Item
+{
+    public int Id { get; set; }
+    public string Code { get; set; }
+    public string Description { get; set; }
+    public string ShortDescription { get; set; }
+    public string UpcCode { get; set; }
+    public string ModelNumber { get; set; }
+    public string CommodityCode { get; set; }
+    public int ItemLineId { get; set; }
+    public int ItemGroupId { get; set; }
+    public int ItemTypeId { get; set; }
+    public int UnitPurchaseQuantity { get; set; }
+    public int UnitOrderQuantity { get; set; }
+    public int PackOrderQuantity { get; set; }
+    public int SupplierId { get; set; }
+    public string SupplierCode { get; set; }
+    public string SupplierPartNumber { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class Location
+{
+    public int Id { get; set; }
+    public int WarehouseId { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class Order
+{
+    public int Id { get; set; }
+    public int SourceId { get; set; }
+    public DateTime OrderDate { get; set; }
+    public DateTime RequestDate { get; set; }
+    public string Reference { get; set; }
+    public string ReferenceExtra { get; set; }
+    public string OrderStatus { get; set; }
+    public string Notes { get; set; }
+    public string ShippingNotes { get; set; }
+    public string PickingNotes { get; set; }
+    public int WarehouseId { get; set; }
+    public int ShipTo { get; set; }
+    public int BillTo { get; set; }
+    public int ShipmentId { get; set; }
+    public decimal TotalAmount { get; set; }
+    public decimal TotalDiscount { get; set; }
+    public decimal TotalTax { get; set; }
+    public decimal TotalSurcharge { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public List<OrderItem> Items { get; set; }
+}
+
+public class OrderItem
+{
+        public int Id { get; set; }
+
+    public int ItemId { get; set; }
+    public int Amount { get; set; }
+}
+
+public class Shipment
+{
+    public int Id { get; set; }
+    public int OrderId { get; set; }
+    public int SourceId { get; set; }
+    public DateTime OrderDate { get; set; }
+    public DateTime RequestDate { get; set; }
+    public DateTime ShipmentDate { get; set; }
+    public string ShipmentType { get; set; }
+    public string ShipmentStatus { get; set; }
+    public string Notes { get; set; }
+    public string CarrierCode { get; set; }
+    public string CarrierDescription { get; set; }
+    public string ServiceCode { get; set; }
+    public string PaymentType { get; set; }
+    public string TransferMode { get; set; }
+    public int TotalPackageCount { get; set; }
+    public decimal TotalPackageWeight { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public List<ShipmentItem> Items { get; set; }
+}
+
+public class ShipmentItem
+{
+    public int Id { get; set; }
+
+    public int ItemId { get; set; }
+    public int Amount { get; set; }
+}
+
+public class Supplier
+{
+    public int Id { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+    public string AddressExtra { get; set; }
+    public string City { get; set; }
+    public string ZipCode { get; set; }
+    public string Province { get; set; }
+    public string Country { get; set; }
+    public string ContactName { get; set; }
+    public string ContactPhone { get; set; }
+    public string Reference { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+public class Transfer
+{
+    public int Id { get; set; }
+    public string Reference { get; set; }
+    public int TransferFrom { get; set; }
+    public int TransferTo { get; set; }
+    public string TransferStatus { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public List<TransferItem> Items { get; set; } = new List<TransferItem>();
+}
+
+public class TransferItem
+{
+        public int Id { get; set; }
+
+    public int ItemId { get; set; }
+    public int Amount { get; set; }
+}
+
+public class Warehouse
+{
+    public int Id { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+    public string City { get; set; }
+    public string ZipCode { get; set; }
+    public string Province { get; set; }
+    public string Country { get; set; }
+    public string ContactName { get; set; }
+    public string ContactPhone { get; set; }
+    public string ContactEmail { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
