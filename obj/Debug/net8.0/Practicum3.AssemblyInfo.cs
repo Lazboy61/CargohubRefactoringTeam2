@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Practicum3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be6b69848f64283e7d7f3bcda68049ccd16370bd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de4dfe2a447a57546fbf175d1c25402c6c15bb12")]
 [assembly: System.Reflection.AssemblyProductAttribute("Practicum3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Practicum3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
