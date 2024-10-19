@@ -6,8 +6,9 @@ using System.Collections.Generic;
 
     [ApiController]
     [Route("api/test")]
-    public class ItemController : ControllerBase
+    public class ItemController<T> : ControllerBase
     {
+        public static List<T> holder = new List<T>();
         private readonly ModelContext _context;
 
         public ItemController(ModelContext context)
