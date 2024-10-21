@@ -5,17 +5,18 @@ using System.Collections.Generic;
 
 
     [ApiController]
-    [Route("api/test")]
-    public class ItemController : ControllerBase
+    [Route("Client")]
+    public class ClientController: ControllerBase
     {
-        public static List<Client> holder = new List<Client>();
         private readonly ModelContext _context;
+        private readonly ICRUDinterface<Client> _CRUDinterface;
 
-        public ItemController(ModelContext context)
+        public ClientController(ICRUDinterface<Client> CRUDinterface,ModelContext context)
         {
+            _CRUDinterface = CRUDinterface;
             _context = context;
         }
-        [HttpGet]
+        [HttpGet("Get")]
         public async Task<IActionResult> Get()
         {
            
@@ -23,18 +24,22 @@ using System.Collections.Generic;
             return Ok("it worked");
         }
 
-
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+           
+            List<Client> holder =_CRUDinterface.GetAll();
+            return Ok(holder);
+        }
+        [HttpPost("Post")]
+        public  async Task<IActionResult> Post([FromBody] Client Client)
+        {
+            _CRUDinterface.Post(Client);
+            return Ok(Client);
+            
         
 
-        // POST: api/Item
-        [HttpPost]
-        public async Task<IActionResult> PostItem(Client client)
-        {
-            _context.Clients.Add(client);
-            await _context.SaveChangesAsync();
 
-            return Ok();
         }
-
         
     }

@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
-public class Client
+public interface Iidentity{
+    int Id {get;set; }
+}
+public class Client : Iidentity
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -18,7 +20,7 @@ public class Client
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class Inventory
+public class Inventory : Iidentity
 {
     public int Id { get; set; }
     public int WarehouseId { get; set; }
@@ -34,7 +36,7 @@ public class Inventory
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class ItemGroup
+public class ItemGroup : Iidentity
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -43,7 +45,7 @@ public class ItemGroup
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class ItemLine
+public class ItemLine : Iidentity
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -52,7 +54,7 @@ public class ItemLine
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class ItemType
+public class ItemType : Iidentity
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -61,7 +63,7 @@ public class ItemType
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class Item
+public class Item : Iidentity
 {
     public int Id { get; set; }
     public string Code { get; set; }
@@ -83,7 +85,7 @@ public class Item
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class Location
+public class Location : Iidentity
 {
     public int Id { get; set; }
     public int WarehouseId { get; set; }
@@ -93,7 +95,7 @@ public class Location
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class Order
+public class Order : Iidentity
 {
     public int Id { get; set; }
     public int SourceId { get; set; }
@@ -118,7 +120,7 @@ public class Order
     public List<OrderItem> Items { get; set; }
 }
 
-public class OrderItem
+public class OrderItem : Iidentity
 {
         public int Id { get; set; }
 
@@ -126,7 +128,7 @@ public class OrderItem
     public int Amount { get; set; }
 }
 
-public class Shipment
+public class Shipment : Iidentity
 {
     public int Id { get; set; }
     public int OrderId { get; set; }
@@ -149,7 +151,7 @@ public class Shipment
     public List<ShipmentItem> Items { get; set; }
 }
 
-public class ShipmentItem
+public class ShipmentItem : Iidentity
 {
     public int Id { get; set; }
 
@@ -157,7 +159,7 @@ public class ShipmentItem
     public int Amount { get; set; }
 }
 
-public class Supplier
+public class Supplier : Iidentity
 {
     public int Id { get; set; }
     public string Code { get; set; }
@@ -175,7 +177,7 @@ public class Supplier
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
 
-public class Transfer
+public class Transfer : Iidentity
 {
     public int Id { get; set; }
     public string Reference { get; set; }
@@ -187,7 +189,7 @@ public class Transfer
     public List<TransferItem> Items { get; set; } = new List<TransferItem>();
 }
 
-public class TransferItem
+public class TransferItem : Iidentity
 {
         public int Id { get; set; }
 
@@ -195,7 +197,7 @@ public class TransferItem
     public int Amount { get; set; }
 }
 
-public class Warehouse
+public class Warehouse : Iidentity
 {
     public int Id { get; set; }
     public string Code { get; set; }

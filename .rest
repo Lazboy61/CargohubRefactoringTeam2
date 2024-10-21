@@ -1,14 +1,24 @@
-POST http://localhost:5000/api/test HTTP/1.1
+POST http://localhost:5000/item/Post HTTP/1.1
 Content-Type: application/json
 
 {
-  "Address": "123 Main Street",
-  "City": "jewbaka",
-  "ZipCode": "12345",
-  "Province": "Gotham",
-  "Country": "USA",
-  "ContactName": "Jane Doe",
-  "ContactPhone": "+1-555-1234",
-  "ContactEmail": "janedoe@example.com"
- 
+  "id": 44,
+  "code": "string",
+  "description": "string",
+  "shortDescription": "string",
+  "upcCode": "string",
+  "modelNumber": "string",
+  "commodityCode": "string",
+  "itemLineId": 0,
+  "itemGroupId": 0,
+  "itemTypeId": 0,
+  "unitPurchaseQuantity": 0,
+  "unitOrderQuantity": 0,
+  "packOrderQuantity": 0,
+  "supplierId": 0,
+  "supplierCode": "string",
+  "supplierPartNumber": "string",
+  "createdAt": "2024-10-21T17:01:42.006Z",
+  "updatedAt": "2024-10-21T17:01:42.006Z"
 }
+
