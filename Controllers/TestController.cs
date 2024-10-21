@@ -6,15 +6,23 @@ using System.Collections.Generic;
 
     [ApiController]
     [Route("api/test")]
-    public class ItemController<T> : ControllerBase
+    public class ItemController : ControllerBase
     {
-        public static List<T> holder = new List<T>();
+        public static List<Client> holder = new List<Client>();
         private readonly ModelContext _context;
 
         public ItemController(ModelContext context)
         {
             _context = context;
         }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+           
+
+            return Ok("it worked");
+        }
+
 
         
 
