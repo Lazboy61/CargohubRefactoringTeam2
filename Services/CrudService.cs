@@ -7,41 +7,48 @@ public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
     {
         _context = context;
     }
-    public async Task Delete(int id)
+    public bool Delete(int id)
     {
-        var entity = await _context.Set<T>().FindAsync(id);
+        var entity = _context.Set<T>().Find(id);
         
         if (entity != null)
         {
             _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
+            return true;
         }
         else
         {
-            throw new KeyNotFoundException($"Entity with id {id} not found.");
+            return false;
         }
     }
 
-    public async Task Delete(T target)
+    public  bool Delete(T target)
     {
-        var entity = await _context.Set<T>().FindAsync(target);
+        var entity = _context.Set<T>().Find(target);
         
         if (entity != null)
         {
             _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
+            return true;
         }
         else
         {
-            throw new KeyNotFoundException($"Entity with entity {target} not found.");
+            return false;
         }
 
     }
 
-    public async Task<T> GetAsync(int id)
+    public T Get(int id) // need a bug fix // er gaat mis blijkbaar returned het niet het helemaal null maar test dit verder
     {
-        var entity =  await _context.Set<T>().FindAsync(id);
-        return entity;
+
+        T entity = _context.Set<T>().Find(id);
+        Console.WriteLine("Aiden is hier zomaar"); // testing
+        Console.WriteLine(entity);
+        if (entity != null) return entity;
+        Console.WriteLine("True it is hella empty");
+        return null;
     }
 
     public List<T> GetAll()

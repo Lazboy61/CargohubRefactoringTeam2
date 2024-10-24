@@ -81,50 +81,50 @@ using Microsoft.EntityFrameworkCore;
 
         // }
         // Item Relationships
-    modelBuilder.Entity<Item>()
-        .HasOne<ItemGroup>()
-        .WithMany()
-        .HasForeignKey(i => i.ItemGroupId);
+    // modelBuilder.Entity<Item>()
+    //     .HasOne<ItemGroup>()
+    //     .WithMany()
+    //     .HasForeignKey(i => i.ItemGroupId);
 
-    modelBuilder.Entity<Item>()
-        .HasOne<ItemLine>()
-        .WithMany()
-        .HasForeignKey(i => i.ItemLineId);
+    // modelBuilder.Entity<Item>()
+    //     .HasOne<ItemLine>()
+    //     .WithMany()
+    //     .HasForeignKey(i => i.ItemLineId);
 
-    modelBuilder.Entity<Item>()
-        .HasOne<ItemType>()
-        .WithMany()
-        .HasForeignKey(i => i.ItemTypeId);
+    // modelBuilder.Entity<Item>()
+    //     .HasOne<ItemType>()
+    //     .WithMany()
+    //     .HasForeignKey(i => i.ItemTypeId);
 
-    // Order and OrderItem (One-to-Many)
-    modelBuilder.Entity<Order>()
-        .HasMany(o => o.Items)
-        .WithOne()
-        .HasForeignKey(oi => oi.Id);
+    // // Order and OrderItem (One-to-Many)
+    // modelBuilder.Entity<Order>()
+    //     .HasMany(o => o.Items)
+    //     .WithOne()
+    //     .HasForeignKey(oi => oi.Id);
 
-    // Shipment and ShipmentItem (One-to-Many)
-    modelBuilder.Entity<Shipment>()
-        .HasMany(s => s.Items)
-        .WithOne()
-        .HasForeignKey(si => si.Id);
+    // // Shipment and ShipmentItem (One-to-Many)
+    // modelBuilder.Entity<Shipment>()
+    //     .HasMany(s => s.Items)
+    //     .WithOne()
+    //     .HasForeignKey(si => si.Id);
 
-    // Transfer and TransferItem (One-to-Many)
-    modelBuilder.Entity<Transfer>()
-        .HasMany(t => t.Items)
-        .WithOne()
-        .HasForeignKey(ti => ti.Id);
+    // // Transfer and TransferItem (One-to-Many)
+    // modelBuilder.Entity<Transfer>()
+    //     .HasMany(t => t.Items)
+    //     .WithOne()
+    //     .HasForeignKey(ti => ti.Id);
 
-    // Warehouse and Location (One-to-Many)
-    modelBuilder.Entity<Location>()
-        .HasOne<Warehouse>()
-        .WithMany()
-        .HasForeignKey(l => l.WarehouseId);
+    // // Warehouse and Location (One-to-Many)
+    // modelBuilder.Entity<Location>()
+    //     .HasOne<Warehouse>()
+    //     .WithMany()
+    //     .HasForeignKey(l => l.WarehouseId);
 
-    // Order and Shipment (One-to-One) using Foreign Key
-    modelBuilder.Entity<Order>()
-        .HasOne<Shipment>()
-        .WithMany()
-        .HasForeignKey(o => o.ShipmentId);
+    // // Order and Shipment (One-to-One) using Foreign Key
+    // modelBuilder.Entity<Order>()
+    //     .HasOne<Shipment>()
+    //     .WithMany()
+    //     .HasForeignKey(o => o.ShipmentId);
 
     // Other configurations can go here
         }
