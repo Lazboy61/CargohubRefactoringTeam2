@@ -122,9 +122,9 @@ public class Order : Iidentity
 
 public class OrderItem : Iidentity
 {
-        public int Id { get; set; }
-
+    public int Id { get; set; }
     public int ItemId { get; set; }
+    public int OrderId {get;set;}
     public int Amount { get; set; }
 }
 
@@ -156,6 +156,7 @@ public class ShipmentItem : Iidentity
     public int Id { get; set; }
 
     public int ItemId { get; set; }
+    public int ShipmentId{get;set;}
     public int Amount { get; set; }
 }
 
@@ -186,7 +187,7 @@ public class Transfer : Iidentity
     public string TransferStatus { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    public List<TransferItem> Items { get; set; } = new List<TransferItem>();
+    public List<TransferItem> Items { get; set; }
 }
 
 public class TransferItem : Iidentity
@@ -194,6 +195,7 @@ public class TransferItem : Iidentity
         public int Id { get; set; }
 
     public int ItemId { get; set; }
+    public int TransferId{get;set;}
     public int Amount { get; set; }
 }
 
