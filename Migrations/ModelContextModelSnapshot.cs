@@ -200,6 +200,24 @@ namespace Practicum3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ItemGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2024, 11, 11, 17, 32, 32, 968, DateTimeKind.Utc).AddTicks(8659),
+                            Description = "description1",
+                            Name = "seedername1",
+                            UpdatedAt = new DateTime(2024, 11, 11, 17, 32, 32, 968, DateTimeKind.Utc).AddTicks(8663)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2024, 11, 11, 17, 32, 32, 968, DateTimeKind.Utc).AddTicks(8666),
+                            Description = "description1",
+                            Name = "seedername1",
+                            UpdatedAt = new DateTime(2024, 11, 11, 17, 32, 32, 968, DateTimeKind.Utc).AddTicks(8666)
+                        });
                 });
 
             modelBuilder.Entity("ItemLine", b =>
@@ -364,7 +382,7 @@ namespace Practicum3.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -452,7 +470,7 @@ namespace Practicum3.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ShipmentId")
+                    b.Property<int>("ShipmentId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -559,7 +577,7 @@ namespace Practicum3.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TransferId")
+                    b.Property<int>("TransferId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -622,21 +640,27 @@ namespace Practicum3.Migrations
                 {
                     b.HasOne("Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShipmentItem", b =>
                 {
                     b.HasOne("Shipment", null)
                         .WithMany("Items")
-                        .HasForeignKey("ShipmentId");
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TransferItem", b =>
                 {
                     b.HasOne("Transfer", null)
                         .WithMany("Items")
-                        .HasForeignKey("TransferId");
+                        .HasForeignKey("TransferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Order", b =>

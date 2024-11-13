@@ -27,6 +27,7 @@ builder.Services.AddTransient<ICRUDinterface<Transfer>, CrudService<Transfer>>()
 builder.Services.AddTransient<ICRUDinterface<TransferItem>, CrudService<TransferItem>>();
 builder.Services.AddTransient<ICRUDinterface<Warehouse>, CrudService<Warehouse>>();
 //
+// DB hier aangemaakt
 builder.Services.AddDbContext<ModelContext>(options => 
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DBConnection")));  //connection string in appsettings 
 
@@ -53,9 +54,5 @@ app.Use(async (context, next) =>
 });
 
 app.Run(); 
-
-
-
-
 
 

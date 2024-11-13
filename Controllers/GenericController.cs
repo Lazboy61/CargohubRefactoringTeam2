@@ -8,13 +8,13 @@ using System.Collections.Generic;
     [Route("api/[controller]")]
     public class GenericController<T>: ControllerBase where T :  Iidentity
     {
-        private readonly ModelContext _context;
+        // private readonly ModelContext _context;
         private readonly ICRUDinterface<T> _CRUDinterface;
 
-        public GenericController(ICRUDinterface<T> CRUDinterface,ModelContext context)
+        public GenericController(ICRUDinterface<T> CRUDinterface)
         {
             _CRUDinterface = CRUDinterface;
-            _context = context;
+            // _context = context;
         }
         [HttpGet("{id}")] 
         public async Task<IActionResult> GetbyId(int id)

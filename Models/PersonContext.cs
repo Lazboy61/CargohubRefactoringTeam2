@@ -23,10 +23,15 @@ using Microsoft.EntityFrameworkCore;
 
 
 
-        public ModelContext(DbContextOptions<ModelContext> options) : base(options) { }
+        public ModelContext(DbContextOptions<ModelContext> options) : base(options) { 
+
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // is een seeder het maakt automatisch bij de migration data die je niet weer handmatig in wilt vullen in de DB)
+            // modelBuilder.Entity<ItemGroup>().HasData(Seeder.LoadItemGroups());
+            
         //     // Item
         //    modelBuilder.Entity<Item>()
         //     .HasOne<ItemLine>()  

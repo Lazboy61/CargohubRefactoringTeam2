@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class InventoryController : GenericController<Inventory>
 {
-    public InventoryController(ICRUDinterface<Inventory> CRUDinterface, ModelContext context) : base(CRUDinterface, context)
+    public InventoryController(ICRUDinterface<Inventory> CRUDinterface, ModelContext context) : base(CRUDinterface)
     {
     }
 }
