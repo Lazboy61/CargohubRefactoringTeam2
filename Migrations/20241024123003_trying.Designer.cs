@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Practicum3.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    partial class ModelContextModelSnapshot : ModelSnapshot
+    [Migration("20241024123003_trying")]
+    partial class trying
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,6 +177,12 @@ namespace Practicum3.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ItemGroupId");
+
+                    b.HasIndex("ItemLineId");
+
+                    b.HasIndex("ItemTypeId");
+
                     b.ToTable("items");
                 });
 
@@ -277,6 +286,8 @@ namespace Practicum3.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("WarehouseId");
+
                     b.ToTable("locations");
                 });
 
@@ -347,16 +358,15 @@ namespace Practicum3.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ShipmentId");
+
                     b.ToTable("orders");
                 });
 
             modelBuilder.Entity("OrderItem", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -364,12 +374,7 @@ namespace Practicum3.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("orderItems");
                 });
@@ -441,10 +446,7 @@ namespace Practicum3.Migrations
             modelBuilder.Entity("ShipmentItem", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -452,12 +454,7 @@ namespace Practicum3.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ShipmentId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ShipmentId");
 
                     b.ToTable("shipmentItems");
                 });
@@ -548,10 +545,7 @@ namespace Practicum3.Migrations
             modelBuilder.Entity("TransferItem", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -559,12 +553,7 @@ namespace Practicum3.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TransferId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TransferId");
 
                     b.ToTable("transferItems");
                 });
@@ -618,25 +607,70 @@ namespace Practicum3.Migrations
                     b.ToTable("warehouses");
                 });
 
+            modelBuilder.Entity("Item", b =>
+                {
+                    b.HasOne("ItemGroup", null)
+                        .WithMany()
+                        .HasForeignKey("ItemGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ItemLine", null)
+                        .WithMany()
+                        .HasForeignKey("ItemLineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ItemType", null)
+                        .WithMany()
+                        .HasForeignKey("ItemTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Location", b =>
+                {
+                    b.HasOne("Warehouse", null)
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Order", b =>
+                {
+                    b.HasOne("Shipment", null)
+                        .WithMany()
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OrderItem", b =>
                 {
                     b.HasOne("Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShipmentItem", b =>
                 {
                     b.HasOne("Shipment", null)
                         .WithMany("Items")
-                        .HasForeignKey("ShipmentId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TransferItem", b =>
                 {
                     b.HasOne("Transfer", null)
                         .WithMany("Items")
-                        .HasForeignKey("TransferId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Order", b =>

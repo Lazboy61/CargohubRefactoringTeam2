@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class OrderController : GenericController<Order>
 {
-    public OrderController(ICRUDinterface<Order> CRUDinterface) : base(CRUDinterface)
+    public OrderController(ICRUDinterface<Order> CRUDinterface, ModelContext context) : base(CRUDinterface, context)
     {
     }
 }

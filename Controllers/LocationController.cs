@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class LocationController : GenericController<Location>
 {
-    public LocationController(ICRUDinterface<Location> CRUDinterface) : base(CRUDinterface)
+    public LocationController(ICRUDinterface<Location> CRUDinterface, ModelContext context) : base(CRUDinterface, context)
     {
     }
 }
