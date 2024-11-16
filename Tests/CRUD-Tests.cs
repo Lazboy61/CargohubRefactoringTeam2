@@ -50,23 +50,76 @@ public class CRUDTest
         Assert.Equal("Location 3",location.Name);
     }
     [Fact]
+    public void AnotherGetTestWithListInClass()
+    {
+        // Given
+        var testOrder = new Order
+        {
+            Id = 1,
+            SourceId = 1001,
+            OrderDate = DateTime.UtcNow,
+            RequestDate = DateTime.UtcNow.AddDays(7),
+            Reference = "REF12345",
+            ReferenceExtra = "Extra details",
+            OrderStatus = "Pending",
+            Notes = "This is a test order",
+            ShippingNotes = "Handle with care",
+            PickingNotes = "Prioritize fragile items",
+            WarehouseId = 2,
+            ShipTo = 10,
+            BillTo = 20,
+            ShipmentId = 30,
+            TotalAmount = 500.00m,
+            TotalDiscount = 50.00m,
+            TotalTax = 25.00m,
+            TotalSurcharge = 10.00m,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow,
+            Items = new List<OrderItem>
+            {
+                new OrderItem
+                {
+                    Id = 1,
+                    ItemId = 101,
+                    OrderId = 1, 
+                    Amount = 5
+                },
+                new OrderItem
+                {
+                    Id = 2,
+                    ItemId = 102,
+                    OrderId = 1,
+                    Amount = 3
+                }
+            }
+        };
+        Context.orders.Add(testOrder);
+        Context.SaveChanges();
+        var OrderService = new CrudService<Order>(Context);
+        // When
+        var checkOrderItem  = OrderService.Get(1);
+
+    
+        // Then
+        Assert.Equal(101,checkOrderItem.Items[0].ItemId);
+    }
+    [Fact]
     public void GetAllTest()
     {
         // Given
-       
+
+        Context.warehouses.Add(new Warehouse { Id = 1, Name = "Location 1" });
+        Context.warehouses.Add(new Warehouse { Id = 2, Name = "Location 2" });
+        Context.warehouses.Add(new Warehouse { Id = 9, Name = "Location 3" });
+        Context.SaveChanges();
+        var WarehouseService = new CrudService<Warehouse>(Context);
+
         // When
-        var CheckServiceitemGroup = new CrudService<ItemGroup>(Context);
-        var CheckServiceitemLocation= new CrudService<Location>(Context);
         
-        
-    
+
+        int amount = WarehouseService.GetAll().Count;
         // Then
-        List<ItemGroup> itemGroups = CheckServiceitemGroup.GetAll();
-        List<Location> locations = CheckServiceitemLocation.GetAll();
-        int amountItemGroups = Context.ItemGroups.ToList().Count;
-        int amountlocations = Context.ItemGroups.ToList().Count;
-        Assert.Equal(2,itemGroups.Count);
-        Assert.Equal(2,locations.Count);
+        Assert.Equal(3,amount);
     }
     [Fact]
     public void DeleteTest()
@@ -86,11 +139,17 @@ public class CRUDTest
     public void Update() // can be both put and/or patch 
     {
         // Given
+        Context.suppliers.Add(new Supplier{Id=1, Code ="jewbaka"});
+        Context.SaveChanges();
     
         // When
-    
+        var SupplierService = new CrudService<Supplier>(Context);
+        SupplierService.Put(new Supplier{Id = 1, Code = "baka"});
+        SupplierService.Put(new Supplier{Id = 1, Code = "sigaar"});
+
         // Then
-        Assert.True(true);
+        Supplier check = SupplierService.Get(1);
+        Assert.Equal("sigaar",check.Code);
     }
     
     

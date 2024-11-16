@@ -1,8 +1,13 @@
 
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
 {
     private readonly ModelContext _context;
+    private DbSet<T> table = null;
+
     public CrudService(ModelContext context)
     {
         _context = context;
@@ -56,11 +61,7 @@ public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
         return _context.Set<T>().ToList();
     }
 
-    public async Task Patch(T target)
-    {   
-        var entity =  await _context.Set<T>().FindAsync(target);
-        
-    }
+    
 
     public T Post(T target)
     {
@@ -73,9 +74,25 @@ public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
         return null;
     }
 
-    public Task Put(T target)
+   
+    public bool Patch(T target)
     {
         throw new NotImplementedException();
     }
-}
 
+    public bool Put(T target)
+    {
+        if (target == null) return false;
+
+        _context.ChangeTracker.Clear();
+
+        _context.Set<T>().Attach(target);
+        _context.Entry(target).State = EntityState.Modified;
+
+        _context.SaveChanges();
+        return true;
+    }
+
+
+
+}
