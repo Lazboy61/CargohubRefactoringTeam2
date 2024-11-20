@@ -96,12 +96,14 @@ public class CRUDTest
         Context.orders.Add(testOrder);
         Context.SaveChanges();
         var OrderService = new CrudService<Order>(Context);
+        
         // When
         var checkOrderItem  = OrderService.Get(1);
 
-    
+        int amount = OrderService.Get(1).Items[0].ItemId;
+
         // Then
-        Assert.Equal(101,checkOrderItem.Items[0].ItemId);
+        Assert.Equal(101,amount);
     }
     [Fact]
     public void GetAllTest()
@@ -129,9 +131,12 @@ public class CRUDTest
         // When
         var CheckServiceitemGroup = new CrudService<ItemGroup>(Context);
         var CheckServiceitemLocation= new CrudService<Location>(Context);
+        
         bool check = CheckServiceitemGroup.Delete(1);
         bool check2 = CheckServiceitemLocation.Delete(1);
         // Then
+        Assert.Equal(2,Context.ItemGroups.ToList().Count);
+        Assert.Equal(2,Context.locations.ToList().Count);
         Assert.True(check);
         Assert.True(check2);
     }
@@ -152,6 +157,19 @@ public class CRUDTest
         Assert.Equal("sigaar",check.Code);
     }
     
+    [Fact]
+    public void TestingItemInteractions()
+    {
+        Item item= new Item{Id = 1, Code = "testingcode",Description = "A random description"};
+        var ItemService = new CrudService<Item>(Context);
+        ItemService.Post(item);
+
+        // Given
+    
+        // When
+    
+        // Then
+    }
     
 }
 // alles word gerunt voordat de check word gedaan of iets goed is of niet

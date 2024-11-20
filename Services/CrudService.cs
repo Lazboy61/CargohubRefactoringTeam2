@@ -1,71 +1,74 @@
-
-
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
+public class CrudService<T> : ICRUDinterface<T> where T : class, Iidentity
 {
     private readonly ModelContext _context;
-    private DbSet<T> table = null;
 
     public CrudService(ModelContext context)
     {
         _context = context;
     }
+
     public bool Delete(int id)
     {
         var entity = _context.Set<T>().Find(id);
-        
         if (entity != null)
         {
             _context.Set<T>().Remove(entity);
             _context.SaveChanges();
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
-    public  bool Delete(T target)
+    public bool Delete(T target)
     {
         var entity = _context.Set<T>().Find(target);
-        
         if (entity != null)
         {
             _context.Set<T>().Remove(entity);
             _context.SaveChanges();
             return true;
         }
-        else
-        {
-            return false;
-        }
-
+        return false;
     }
 
-    public T Get(int id) // need a bug fix // er gaat mis blijkbaar returned het niet het helemaal null maar test dit verder
+   public T Get(int id)
+{
+    T entity = SearchObject<T>.Check(default, _context, id);
+
+    if (entity == null)
     {
-
-        T entity = _context.Set<T>().Find(id);
-        Console.WriteLine("Aiden is hier zomaar"); // testing
-        Console.WriteLine(entity);
-        if (entity != null) return entity;
-        Console.WriteLine("True it is hella empty");
-        return null;
+        entity = _context.Set<T>().FirstOrDefault(e => e.Id == id);
     }
+
+    return entity;
+}
+
 
     public List<T> GetAll()
     {
-        return _context.Set<T>().ToList();
+        IQueryable<T> query = _context.Set<T>().AsQueryable();
+
+        // Eager loading for specific types
+        if (typeof(T) == typeof(Order) || typeof(T) == typeof(Shipment) || typeof(T) == typeof(Transfer))
+        {
+            query = query.Include("Items");
+        }
+
+        return query.ToList();
     }
 
-    
+    public async Task Patch(T target)
+    {
+        var entity = await _context.Set<T>().FindAsync(target);
+        // Implementation needed
+    }
 
     public T Post(T target)
     {
-        if(target !=  null)
+        if (target != null)
         {
             _context.Set<T>().Add(target);
             _context.SaveChanges();
@@ -74,8 +77,8 @@ public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
         return null;
     }
 
-   
-    public bool Patch(T target)
+
+    bool ICRUDinterface<T>.Patch(T target)
     {
         throw new NotImplementedException();
     }
@@ -92,7 +95,4 @@ public class CrudService<T> : ICRUDinterface<T> where T : class , Iidentity
         _context.SaveChanges();
         return true;
     }
-
-
-
 }
