@@ -156,6 +156,26 @@ public class CRUDTest
         Supplier check = SupplierService.Get(1);
         Assert.Equal("sigaar",check.Code);
     }
+    [Fact]
+    public void TestingIfTimeGetsUpdated()
+    {
+        // Given
+        var now = DateTime.UtcNow;
+        Context.inventories.Add(new Inventory{Id=1, Description ="jewbaka",CreatedAt = now});
+        Context.SaveChanges();
+
+
+        // When
+        var InventoryService = new CrudService<Inventory>(Context);
+        InventoryService.Put(new Inventory { Id = 1, Description = "ReDone" });
+
+        var UpdatedInventory = InventoryService.Get(1);
+
+        // Then
+        Assert.True(UpdatedInventory.UpdatedAt > now); 
+        Assert.True((DateTime.UtcNow - UpdatedInventory.UpdatedAt).Milliseconds < 500);  
+    }
+    
     
     [Fact]
     public void TestingItemInteractions()
